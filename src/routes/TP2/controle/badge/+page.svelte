@@ -8,9 +8,11 @@
     import {categories} from "./badge";
     import type {Batiment} from "../../../../interface/Batiment";
     import BatimentService from "../../../../service/BatimentService";
+    import {BadgeStates} from "../../../../interface/BadgeStates";
+    import type {BadgeDTO} from "../../../../interface/BadgeDTO";
 
     let intervenants: Intervenant[] = [];
-    let badges: Badge[] = [];
+    let badges: BadgeDTO[] = [];
     let batiments: Batiment[] = [];
     let activeTab = 1
     let color = "green-300"
@@ -41,18 +43,27 @@
     }
 
     async function getBadges(){
-        badges = await BadgeService.getAll();
+        badges = await BadgeService.getAllBadge() as BadgeDTO[];
+        cats.forEach(cat=>{
+            if (cat.name === "Badge"){
+                cat.data = badges
+            }
+        })
     }
 
 
     async function ajoutBadge(){
-        let firstname = (document.getElementById("firstname") as HTMLInputElement).value;
-        let lastname = (document.getElementById("lastname") as HTMLInputElement).value;
-        if (firstname == "" || lastname == ""){
+        let idInt = (document.getElementById("idInt") as HTMLInputElement).value;
+        let idBat: string = (document.getElementById("idBat") as HTMLInputElement).value;
+        if (idInt == "" || idBat == ""){
             console.log("Veuillez renseigner les champs !")
             return;
         }
-        let res = await BadgeService.create({})
+        let batLongId = idBat.split(",").map((bat) => {
+            return Number(bat.trim())
+        })
+        //console.log(batLongId)
+        let res = await BadgeService.createBadge({batiments: batLongId, owner_id: Number(idInt.trim()), state:BadgeStates.enabled})
         getBadges()
     }
 
@@ -79,13 +90,13 @@
                     <div class="label">
                         <span class="label-text">A qui voulez vous assigner le nouveau badge ?</span>
                     </div>
-                    <input type="text" placeholder="ID Intervenant" class="input input-bordered w-1/3" id="lastname"/>
+                    <input type="text" placeholder="ID Intervenant" class="input input-bordered w-1/3" id="idInt"/>
                 </label>
                 <label class="form-control w-full flex  items-center justify-evenly">
                     <div class="label">
                         <span class="label-text">A quels batiments aura t-il accès ?</span>
                     </div>
-                    <input type="text" placeholder="Exemple: 1 - 3" class="input input-bordered w-1/3" id="lastname"/>
+                    <input type="text" placeholder="Exemple: 1 - 3" class="input input-bordered w-1/3" id="idBat"/>
                 </label>
                 <button class="btn bg-green-300 w-1/3" on:click={ajoutBadge}>Ajouter</button>
             </div>

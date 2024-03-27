@@ -1,7 +1,7 @@
 import {disableScrollHandling} from "$app/navigation";
 
 export enum BadgeStates{
-    enabled = 1,
+    enabled = 0,
     disabled,
     lose,
 }
