@@ -6,14 +6,15 @@
     let bulbColor = "text-black"
 
 </script>
-<div class="flex">
-    <div>
+<div class="flex w-full h-full">
+    <div class="w-6">
         {#if bulbLight}
-            <div class="{bulbColor}">{lightBulb}</div>
+            <div class="{bulbColor}">{@html lightBulb}</div>
         {:else}
-            {bulb}
+            {@html bulb}
         {/if}
     </div>
+    <a href="batiments/vue">vue</a>
     <div>
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21h18M9 8h1m-1 4h1m-1 4h1m4-8h1m-1 4h1m-1 4h1M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>
     </div>
