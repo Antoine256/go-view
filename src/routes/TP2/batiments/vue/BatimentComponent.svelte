@@ -10,7 +10,7 @@
     let closeDoor = `<svg class="h-24 w-24" xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" viewBox="0 0 24 24"><path fill="currentColor" d="M3 21v-2h2V5q0-.825.588-1.412T7 3h10q.825 0 1.413.588T19 5v14h2v2zm14-2V5H7v14zm-3-6q.425 0 .713-.288T15 12q0-.425-.288-.712T14 11q-.425 0-.712.288T13 12q0 .425.288.713T14 13M7 5v14z"/></svg>`;
 
     let badgeScanned = false
-    let isInside = true;
+    let isInside = false;
 
     //let doors: Door[] = [];
 
