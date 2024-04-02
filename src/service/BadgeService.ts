@@ -13,6 +13,11 @@ class BadgeService extends GenericService<Badge>{
         return response.data;
     }
 
+    async modifBadge(badge: Badge){
+        const response = await axios.put(`http://localhost:8080/api/badge/update`, badge);
+        return response.data;
+    }
+
     async getAllBadge(): Promise<BadgeDTO[]> {
         const response = await axios.get(`http://localhost:8080/api/badge`);
         response.data.forEach((e: BadgeDTO)=>{

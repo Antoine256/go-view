@@ -17,6 +17,9 @@
     let activeTab = 1
     let color = "green-300"
     let cats = categories;
+    let dic = {};
+    let modtable = 0;
+
 
     onMount(()=>{
         getBadges()
@@ -31,6 +34,7 @@
                 cat.data = batiments
             }
         })
+        modtable++
     }
 
     async function getIntervenants(){
@@ -40,6 +44,7 @@
                 cat.data = intervenants
             }
         })
+        modtable++
     }
 
     async function getBadges(){
@@ -49,6 +54,7 @@
                 cat.data = badges
             }
         })
+        modtable++
     }
 
 
@@ -124,14 +130,18 @@
             </tr>
             </thead>
             <tbody>
-            {#each cats[activeTab-1].data as catAtt}
-                <tr>
-                    {#each cats[activeTab-1].attributes as catAttName}
-                        <td> {catAtt[catAttName.attName]} </td>
-                    {/each}
-                    <td><button on:click={()=>{deleteBadge(catAtt.id)}} class="text-red-400"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16m-10 4v6m4-6v6M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/></svg></button></td>
-                </tr>
-            {/each}
+            {#key modtable}
+                {#each cats[activeTab-1].data as catAtt}
+                    <tr>
+                        {#each cats[activeTab-1].attributes as catAttName}
+                            <td> {catAtt[catAttName.attName]} </td>
+                        {/each}
+                        {#if cats[activeTab-1].name === "Badge"}
+                            <td><button on:click={()=>{deleteBadge(catAtt.id)}} class="text-red-400"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16m-10 4v6m4-6v6M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/></svg></button></td>
+                        {/if}
+                    </tr>
+                {/each}
+            {/key}
             </tbody>
         </table>
     </div>
