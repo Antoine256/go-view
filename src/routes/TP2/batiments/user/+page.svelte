@@ -5,12 +5,13 @@
     import UserCardComponent from "./UserCardComponent.svelte";
 
     let users: Intervenant[] = [];
+
     onMount(async () => {
         users = await IntervenantService.getAll();
     })
 </script>
-<div class="h-screen w-screen">
+<div class="h-screen w-screen flex gap-4 flex-wrap p-5">
     {#each users as user}
-        <UserCardComponent user="{user}"/>
+        <UserCardComponent intervenant="{user}"/>
     {/each}
 </div>
