@@ -11,7 +11,7 @@
     let links:Link[] = [
         {
             link:"/controle",
-            name:"Panneau de Controle",
+            name:"Salle de commande",
             color: "text-red-300",
             icon:`<svg xmlns="http://www.w3.org/2000/svg" width="=auto" height="auto" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10a2 2 0 1 0 4 0a2 2 0 0 0-4 0m2-6v4m0 4v8m4-4a2 2 0 1 0 4 0a2 2 0 0 0-4 0m2-12v10m0 4v2m4-13a2 2 0 1 0 4 0a2 2 0 0 0-4 0m2-3v1m0 4v11"/></svg>`
         },
@@ -20,11 +20,17 @@
             name:"Vue des bâtiments",
             color: "text-blue-300",
             icon:`<svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 9l5 5v7H8v-4m0 4H3v-7l5-5m1 1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17h-8m0-14v.01M17 7v.01M17 11v.01M17 15v.01"/></svg>`
+        },
+        {
+            link:"/journal",
+            name:"Journal de bord",
+            color: "text-green-300",
+            icon:`<svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2m-8-4h6m-6-4h6"/></g></svg>`
         }
     ]
 </script>
 
-<div class="w-screen h-screen bg-slate-50 grid grid-cols-2 gap-11 p-12">
+<div class="w-screen h-screen bg-slate-50 grid grid-cols-3 gap-11 p-12">
     {#each links as link}
         <div class="border-2 shadow-lg rounded-3xl card flex justify-center items-center cursor-pointer" on:click={()=>{nav(link.link)}}>
             <div class="w-1/3 {link.color}">{@html link.icon}</div>
