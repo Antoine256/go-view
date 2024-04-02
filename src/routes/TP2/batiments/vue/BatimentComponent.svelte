@@ -4,6 +4,7 @@
     import LightComponent from "./LightComponent.svelte";
     import HumanComponent from "./HumanComponent.svelte";
     import BadgeReaderComponent from "./BadgeReaderComponent.svelte";
+    import AlarmeComponent from "./AlarmeComponent.svelte";
 
     export let batiment: Batiment;
     let openDoor = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M11 13q.425 0 .713-.288T12 12q0-.425-.288-.712T11 11q-.425 0-.712.288T10 12q0 .425.288.713T11 13m-4 8v-2l6-1V6.875q0-.375-.225-.675t-.575-.35L7 5V3l5.5.9q1.1.2 1.8 1.025T15 6.85v12.8zm-4 0v-2h2V5q0-.85.588-1.425T7 3h10q.85 0 1.425.575T19 5v14h2v2zm4-2h10V5H7z"/></svg>`;
@@ -11,6 +12,7 @@
 
     let badgeScanned = false
     let isInside = false;
+    let fireAlarm: boolean = false;
 
     //let doors: Door[] = [];
 
@@ -42,5 +44,8 @@
     </div>
     <div class="w-full h-1/4 flex justify-center items-center bg-lime-300" id="out">
         <HumanComponent hidden="{!isInside}" id="humanOutBatiment"/>
+    </div>
+    <div class="h-10 w-10 m-5 absolute top-0 right-0">
+        <AlarmeComponent bind:on="{fireAlarm}"/>
     </div>
 </div>
