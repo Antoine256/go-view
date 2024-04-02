@@ -17,7 +17,7 @@
     </div>
     Retour
 </div>
-<div class="flex gap-4 flex-wrap p-5">
+<div class="flex place-content-center gap-4 flex-wrap p-5">
     {#each users as user}
         <UserCardComponent intervenant="{user}"/>
     {/each}
