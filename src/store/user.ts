@@ -9,7 +9,7 @@ export function userIsSelected(): boolean {
 }
 
 export function isUserSelected(intervenant: Intervenant): boolean {
-    return get(user) === intervenant;
+    return get(user)?.id === intervenant?.id;
 }
 
 export function setUserSelect(intervenant: Intervenant): void {
