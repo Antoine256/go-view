@@ -1,5 +1,8 @@
 <script lang="ts">
     export let idHuman: string;
+    export let idDoor: number;
+    export let canEnter: boolean;
+    export let doorSeleded: number;
 
     function allowDrop(ev): void {
         ev.preventDefault();
@@ -8,6 +11,8 @@
     function dropHuman(id: string, ev): void {
         ev.preventDefault();
         ev.target.appendChild(document.getElementById(id));
+        canEnter = true;
+        doorSeleded = idDoor;
     }
 </script>
 
