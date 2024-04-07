@@ -52,4 +52,4 @@
     }
 </script>
 
-<div on:drop={() => dropHuman(idHuman, event)} on:dragover={() => allowDrop( event)} class="w-16 h-16 bg-red-300"></div>
+<div on:drop={() => dropHuman(idHuman, event)} on:dragover={() => allowDrop( event)} class="w-16 h-16 border border-2 border-dashed border-gray-500"></div>

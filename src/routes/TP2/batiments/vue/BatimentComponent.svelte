@@ -36,7 +36,7 @@
     <div class="w-full h-1/4 flex justify-center items-center bg-gray-300" id="in">
         <HumanComponent hidden="{isInside}" id="humanInBatiment"/>
         {#if canPass && !isInside}
-            <div on:drop={() => passHuman("humanOutBatiment", event)} on:dragover={() => allowDrop( event)} class="w-16 h-16 bg-red-300"></div>
+            <div on:drop={() => passHuman("humanOutBatiment", event)} on:dragover={() => allowDrop( event)} class="w-16 h-16 border border-2 border-dashed border-gray-500"></div>
         {/if}
     </div>
     <div class="w-11/12 flex justify-around grow">
@@ -67,7 +67,7 @@
     <div class="w-full h-1/4 flex justify-center items-center bg-lime-300" id="out">
         <HumanComponent hidden="{!isInside}" id="humanOutBatiment"/>
         {#if canPass && isInside}
-            <div on:drop={() => passHuman("humanInBatiment", event)} on:dragover={() => allowDrop( event)} class="w-16 h-16 bg-red-300"></div>
+            <div on:drop={() => passHuman("humanInBatiment", event)} on:dragover={() => allowDrop( event)} class="w-16 h-16 border border-2 border-dashed border-gray-500"></div>
         {/if}
     </div>
     <div class="h-10 w-10 m-5 absolute top-0 right-0">
