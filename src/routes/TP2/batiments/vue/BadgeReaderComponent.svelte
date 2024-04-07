@@ -4,11 +4,11 @@
     export let canEnter: boolean;
     export let doorSeleded: number;
 
-    function allowDrop(ev): void {
+    function allowDrop(ev: any): void {
         ev.preventDefault();
     }
 
-    function dropHuman(id: string, ev): void {
+    function dropHuman(id: string, ev: any): void {
         ev.preventDefault();
         ev.target.appendChild(document.getElementById(id));
         canEnter = true;

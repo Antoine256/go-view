@@ -4,7 +4,7 @@
     export let hidden: boolean = false;
     export let id: string;
 
-    function dragHuman(id: string, ev): void {
+    function dragHuman(id: string, ev:any): void {
         ev.dataTransfer.setData("text", ev.target.id);
     }
 </script>
