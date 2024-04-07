@@ -2,7 +2,8 @@
     import EventSocket from "../../../../service/EventSocket";
     import {type FormatEventSocket} from "../../../../interface/FormatEventSocket";
     import {acts} from "@tadashi/svelte-notification";
-    import {getBadgeSelected} from "../../../../store/badge";
+    import {badgeIsSelected, getBadgeSelected} from "../../../../store/badge";
+    import {getUserSelected} from "../../../../store/user";
 
     export let idHuman: string;
     export let idBatiment: number;
@@ -15,12 +16,12 @@
     }
 
     async function dropHuman(id: string, ev: any): Promise<void> {
-        ev.preventDefault();
-        ev.target.appendChild(document.getElementById(id));
-        //canEnter = true;
         doorSeleded = idDoor;
-        let badge: number = getBadgeSelected()?.id ?? 13;
-        if(badge) {
+
+        if(badgeIsSelected()) {
+            ev.preventDefault();
+            ev.target.appendChild(document.getElementById(id));
+            let badge: number = getBadgeSelected()!.id;
             let event: FormatEventSocket = {
                 message: "Badge Lu",
                 idBadge: badge,
@@ -32,10 +33,16 @@
                 EventSocket.socket.onmessage = (event) => {
                     console.log(event)
                     console.log('Received message:uyv', event.data);
+                    //canEnter = true;
                 }
             }
         } else {
-            acts.add({mode: 'error', message: 'Ne possède pas de badge', lifetime: 3})
+            if(getUserSelected()!.badges.length > 0){
+                acts.add({mode: 'error', message: 'Vous devez sélectionner un badge', lifetime: 5})
+                acts.add({mode: 'info', message: 'Cliquez sur le personnage', lifetime: 5})
+            } else {
+                acts.add({mode: 'error', message: 'Ne possède pas de badge', lifetime: 3})
+            }
         }
     }
 </script>

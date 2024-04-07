@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export class GenericService<T> {
-    private API_URL = "http://localhost:8080/api"
+    private API_URL = "http://192.168.1.17:8080/api"
     constructor(private url: string) {}
 
     async getAll(): Promise<T[]> {

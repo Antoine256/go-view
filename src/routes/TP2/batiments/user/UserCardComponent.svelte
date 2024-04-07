@@ -1,11 +1,13 @@
 <script lang="ts">
     import {type Intervenant} from "../../../../interface/Intervenant";
     import user, {isUserSelected, setUserSelect} from "../../../../store/user.js";
+    import {resetBadgeSelected} from "../../../../store/badge";
 
     export let intervenant: Intervenant;
 
     function selectThisIntervenant(){
         setUserSelect(intervenant);
+        resetBadgeSelected();
     }
 </script>
 {#key $user}
