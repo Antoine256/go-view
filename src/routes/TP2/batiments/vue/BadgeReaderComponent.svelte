@@ -1,6 +1,6 @@
 <script lang="ts">
     import EventSocket from "../../../../service/EventSocket";
-    import {type FormatEventSocket} from "../../../../interface/FormatEventSocket";
+    import {type FormatEventSocket, type FormatReponseSocket, MESSAGE} from "../../../../interface/FormatEventSocket";
     import {acts} from "@tadashi/svelte-notification";
     import {badgeIsSelected, getBadgeSelected} from "../../../../store/badge";
     import {getUserSelected} from "../../../../store/user";
@@ -21,6 +21,7 @@
         if(badgeIsSelected()) {
             ev.preventDefault();
             ev.target.appendChild(document.getElementById(id));
+
             let badge: number = getBadgeSelected()!.id;
             let event: FormatEventSocket = {
                 message: "Badge Lu",
@@ -28,12 +29,16 @@
                 idBatiment: idBatiment,
                 idPorte: idDoor
             }
+
             EventSocket.sendMessage(JSON.stringify(event));
+
             if(EventSocket.socket){
                 EventSocket.socket.onmessage = (event) => {
-                    console.log(event)
-                    console.log('Received message:uyv', event.data);
-                    //canEnter = true;
+                    let response: FormatReponseSocket = JSON.parse(event.data);
+                    if(response.idBatiment === idBatiment && response.idPorte === idDoor && response.message === MESSAGE.OPEN_DOOR){
+                        canEnter = true;
+                    }
+                    console.log(response)
                 }
             }
         } else {
@@ -47,4 +52,4 @@
     }
 </script>
 
-<div on:drop={() => dropHuman(idHuman, event)} on:dragover={() => allowDrop( event)} class=" w-16 h-16 bg-red-300"></div>
+<div on:drop={() => dropHuman(idHuman, event)} on:dragover={() => allowDrop( event)} class="w-16 h-16 bg-red-300"></div>
