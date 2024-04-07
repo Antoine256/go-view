@@ -4,7 +4,7 @@
     import {type Batiment} from "../../../../interface/Batiment";
     import BatimentComponent from "./BatimentComponent.svelte";
     import {goto} from "$app/navigation";
-    import {acts, Notifications} from "@tadashi/svelte-notification";
+    import {Notifications} from "@tadashi/svelte-notification";
     import EventSocket from "../../../../service/EventSocket";
 
     let batiments: Batiment[] = [];
@@ -21,21 +21,25 @@
     }
 
     function nextBatiment(): void {
-        if(currentBatiment + 1 > batiments.length - 1){
-            currentBatiment = 0;
-        } else {
-            currentBatiment++;
+        if(document.getElementById("humanOutBatiment")) {
+            if (currentBatiment + 1 > batiments.length - 1) {
+                currentBatiment = 0;
+            } else {
+                currentBatiment++;
+            }
+            resetHumanPosition();
         }
-        resetHumanPosition();
     }
 
     function previousBatiment(): void {
-        if(currentBatiment - 1 < 0){
-            currentBatiment = batiments.length - 1;
-        } else {
-            currentBatiment--;
+        if(document.getElementById("humanOutBatiment")) {
+            if (currentBatiment - 1 < 0) {
+                currentBatiment = batiments.length - 1;
+            } else {
+                currentBatiment--;
+            }
+            resetHumanPosition();
         }
-        resetHumanPosition();
     }
 
     function nav(){
