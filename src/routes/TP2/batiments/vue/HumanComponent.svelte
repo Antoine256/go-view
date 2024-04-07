@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {getUserSelected, setUserSelect, userIsSelected} from "../../../../store/user.js";
+    import {getUserSelected, userIsSelected} from "../../../../store/user.js";
 
     export let hidden: boolean = false;
     export let id: string;

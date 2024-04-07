@@ -1,6 +1,6 @@
 <script lang="ts">
     import {type Intervenant} from "../../../../interface/Intervenant";
-    import user, {getUserSelected, isUserSelected, setUserSelect, userIsSelected} from "../../../../store/user.js";
+    import user, {isUserSelected, setUserSelect} from "../../../../store/user.js";
 
     export let intervenant: Intervenant;
 

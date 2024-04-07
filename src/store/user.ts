@@ -3,7 +3,6 @@ import {get, writable} from "svelte/store";
 import {type Intervenant} from "../interface/Intervenant";
 
 const user = persist(writable<Intervenant | undefined>(undefined), createLocalStorage(), "user");
-
 export function userIsSelected(): boolean {
     return get(user) !== undefined;
 }

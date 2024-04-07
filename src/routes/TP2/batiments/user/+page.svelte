@@ -9,6 +9,7 @@
 
     onMount(async () => {
         users = await IntervenantService.getAll();
+        console.log(users)
     })
 </script>
 <div class="h-16 flex w-fit justify-start items-center cursor-pointer" on:click={()=>{goto("./")}}>

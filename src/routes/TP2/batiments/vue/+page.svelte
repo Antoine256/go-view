@@ -5,54 +5,10 @@
     import BatimentComponent from "./BatimentComponent.svelte";
     import {goto} from "$app/navigation";
     import {acts, Notifications} from "@tadashi/svelte-notification";
+    import EventSocket from "../../../../service/EventSocket";
 
     let batiments: Batiment[] = [];
     let currentBatiment: number = 0;
-
-    let socket: WebSocket | null = null;
-
-    const handleConnect = () => {
-        console.log('Connecting to WebSocket server...');
-        socket = new WebSocket('ws://localhost:8081'); // Replace with your WebSocket server URL
-
-        if (!socket) {
-            console.error('Failed to create WebSocket connection');
-            acts.add({mode: 'error', message: 'Connexion loupée !', lifetime: 3})
-            return;
-        }
-
-        socket.onopen = (event) => {
-            console.log('WebSocket connection opened:', event);
-            acts.add({mode: 'success', message: 'Connection Réussie!', lifetime: 3},)
-            if (socket == null) return;
-        };
-
-        socket.onmessage = (event) => {
-            console.log('Received message:', event.data);
-        }
-
-        socket.onclose = (event) => {
-            console.log('WebSocket connection closed:', event);
-            acts.add({mode: 'info', message: 'Connexion Socket Fermée !', lifetime: 3})
-        };
-    };
-
-    // Envoyer un message au serveur WebSocket
-    function sendMessage(message: string) {
-        if (socket==null){
-            acts.add({mode: 'error', message: "Impossible d'envoyer le message !"})
-            return;
-        }
-        socket.send(message);
-    }
-    const handleDisconnect = () => {
-        if (socket) {
-            socket.close();
-            socket = null;
-            console.log('WebSocket disconnected');
-            acts.add({mode: 'success', message: 'Déconnexion réussie !', lifetime: 3})
-        }
-    };
 
     function resetHumanPosition(): void{
         if(document.getElementById("humanInBatiment")){
@@ -83,18 +39,17 @@
     }
 
     function nav(){
-        handleDisconnect();
+        EventSocket.handleDisconnect();
         goto("./")
     }
 
     onMount(async () => {
         batiments = await batimentService.getAll();
-        handleConnect();
+        EventSocket.handleConnect();
     })
 </script>
-<input type="button" class="absolute h-10 bg-red-400 top-1/3 left-1/2" value="TEST SOCKET" on:click={()=>{sendMessage("Badge Lu")}}>
 <div class="h-screen w-screen flex items-center">
-    <div class="h-16 flex w-fit absolute top-0 justify-start items-center cursor-pointer" on:click={()=>{nav}}>
+    <div class="h-16 flex w-fit absolute top-0 justify-start items-center cursor-pointer" on:click={nav}>
         <div class="h-10 w-10 mx-5">
             <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l6 6m-6-6l6-6"/></svg>
         </div>

@@ -36,7 +36,7 @@
         {#each {length: batiment?.nb_door} as _, i}
             <div class="flex flex-col justify-center items-center text-center">
                 {#if isInside}
-                    <BadgeReaderComponent idHuman="humanInBatiment" idDoor="{i}" bind:canEnter bind:doorSeleded={doorSelected}/>
+                    <BadgeReaderComponent idHuman="humanInBatiment" idBatiment="{batiment?.id}" idDoor="{i}" bind:canEnter bind:doorSeleded={doorSelected}/>
                 {/if}
                 <LightComponent badgeScanned="{badgeScanned}"/>
                 <div class="flex justify-center items-center">
@@ -52,7 +52,7 @@
                 <p>{i + 1}</p>
                 <LightComponent badgeScanned="{badgeScanned}"/>
                 {#if !isInside}
-                    <BadgeReaderComponent idHuman="humanOutBatiment" idDoor="{i}" bind:canEnter bind:doorSeleded={doorSelected}/>
+                    <BadgeReaderComponent idHuman="humanOutBatiment" idBatiment="{batiment?.id}" idDoor="{i}" bind:canEnter bind:doorSeleded={doorSelected}/>
                 {/if}
             </div>
         {/each}
