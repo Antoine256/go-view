@@ -8,7 +8,6 @@
     export let idHuman: string;
     export let idBatiment: number;
     export let idDoor: number;
-    export let canEnter: boolean;
     export let doorSeleded: number;
 
     function allowDrop(ev: any): void {
@@ -31,16 +30,6 @@
             }
 
             EventSocket.sendMessage(JSON.stringify(event));
-
-            if(EventSocket.socket){
-                EventSocket.socket.onmessage = (event) => {
-                    let response: FormatReponseSocket = JSON.parse(event.data);
-                    if(response.idBatiment === idBatiment && response.idPorte === idDoor && response.message === MESSAGE.OPEN_DOOR){
-                        canEnter = true;
-                    }
-                    console.log(response)
-                }
-            }
         } else {
             if(getUserSelected()!.badges.length > 0){
                 acts.add({mode: 'error', message: 'Vous devez sélectionner un badge', lifetime: 5})

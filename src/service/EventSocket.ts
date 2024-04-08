@@ -2,7 +2,7 @@ import {acts} from "@tadashi/svelte-notification";
 
 class EventSocket {
     public socket: WebSocket | null = null;
-    private URL: string = "ws://192.168.1.17:8081";
+    private URL: string = "ws://172.20.10.7:8081";
 
     handleConnect = () => {
         console.log('Connecting to WebSocket server...');
@@ -20,9 +20,9 @@ class EventSocket {
             if (this.socket == null) return;
         };
 
-        this.socket.onmessage = (event) => {
+        /*this.socket.onmessage = (event) => {
             console.log('Received message:', event.data);
-        }
+        }*/
 
         this.socket.onclose = (event) => {
             console.log('WebSocket connection closed:', event);

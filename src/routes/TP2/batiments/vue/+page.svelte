@@ -49,7 +49,6 @@
 
     onMount(async () => {
         batiments = await batimentService.getAll();
-        EventSocket.handleConnect();
     })
 </script>
 <div class="h-screen w-screen flex items-center">

@@ -13,6 +13,8 @@ export interface FormatReponseSocket{
 
 export enum MESSAGE{
     OPEN_DOOR = "Open door",
-    CLOSE_DOOR = "Block door",
-    LIGHT_OFF = "TurnOfLight"
+    CLOSE_DOOR = "Close Door",
+    BLOCK_DOOR = "Block door",
+    UNLOCK_DOOR = "Unlock door",
+    LIGHT_OFF = "TurnOffLight"
 }
