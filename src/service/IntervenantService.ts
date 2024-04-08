@@ -8,7 +8,7 @@ class IntervenantService extends GenericService<Intervenant>{
     }
 
     async deleteIntervenant(id: number){
-        const response = await axios.delete(`http://localhost:8080/api/intervenant/delete/`+id);
+        const response = await axios.delete(`${this.API_URL}/intervenant/delete/`+id);
         return response.data;
     }
 }

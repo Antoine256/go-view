@@ -9,7 +9,7 @@ class BatimentService extends GenericService<Batiment>{
     }
 
     async deleteBatiment(id: number){
-        const response = await axios.delete(`http://localhost:8080/api/batiment/delete/`+id);
+        const response = await axios.delete(`${this.API_URL}/batiment/delete/`+id);
         return response.data;
     }
 }
