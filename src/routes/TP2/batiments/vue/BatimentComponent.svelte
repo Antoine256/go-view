@@ -30,6 +30,7 @@
     function passHuman(id: string, ev: any): void {
         ev.preventDefault();
         ev.target.appendChild(document.getElementById(id));
+        laserClicked(doorSelected);
         let event: FormatEventSocket = {
             message: isInside ? "Sort du batiment" : "Entre dans le batiment",
             idBadge: getBadgeSelected()?.id,
@@ -43,8 +44,13 @@
         doorSelected = -1;
     }
 
-    function laserClicked(){
-        console.log("laser")
+    function laserClicked(idDoor){
+        let event: FormatEventSocket = {
+            message: "Laser detected",
+            idBatiment: batiment.id,
+            idPorte: idDoor,
+        }
+        EventSocket.sendMessage(JSON.stringify(event));
     }
 
     function doorIsIn(doors: any[], idDoor: number): boolean{
@@ -119,7 +125,7 @@
                             {/if}
                         {/key}
                     </span>
-                    <svg class="cursor-pointer hover:text-red-700 transition-all" on:click={laserClicked} xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M9 22q-1.25 0-2.125-.875T6 19q0-1.25.875-2.125T9 16q1.25 0 2.125.875T12 19q0 1.25-.875 2.125T9 22m4.475-3.475q-.15-1.375-1.025-2.425t-2.175-1.425L12.925 12H5.9q-.8 0-1.35-.55T4 10.1q0-.5.263-.937t.687-.713L17.1 1.175q.45-.275.95-.138t.775.588q.275.45.138.938t-.563.762L9 9h9.1q.8 0 1.35.55T20 10.9q0 .45-.112.888t-.438.762z"/></svg>
+                    <svg class="cursor-pointer hover:text-red-700 transition-all" on:click={() => laserClicked(i)} xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M9 22q-1.25 0-2.125-.875T6 19q0-1.25.875-2.125T9 16q1.25 0 2.125.875T12 19q0 1.25-.875 2.125T9 22m4.475-3.475q-.15-1.375-1.025-2.425t-2.175-1.425L12.925 12H5.9q-.8 0-1.35-.55T4 10.1q0-.5.263-.937t.687-.713L17.1 1.175q.45-.275.95-.138t.775.588q.275.45.138.938t-.563.762L9 9h9.1q.8 0 1.35.55T20 10.9q0 .45-.112.888t-.438.762z"/></svg>
                 </div>
                 <p>{i + 1}</p>
                 {#key batiment}
