@@ -10,10 +10,6 @@
 
     let events: Event[] = []
 
-    function nav(){
-        goto("/tp2");
-    }
-
     async function getEvents(){
         events = await EventService.getAll();
     }
@@ -30,7 +26,7 @@
 </script>
 <div class="w-screen h-screen flex">
     <div class="h-full w-1/2 flex flex-col">
-        <div class="h-16 flex w-full justify-start items-center cursor-pointer" on:click="{nav}">
+        <div class="h-16 flex w-full justify-start items-center cursor-pointer" on:click="{() => goto('./')}">
             <div class="h-10 w-10 mx-5">
                 <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l6 6m-6-6l6-6"/></svg>
             </div>
@@ -66,9 +62,9 @@
             {#each events as event}
                 <tr>
                     <td> {event.id} </td>
-                    <td> {event.batiment.name} </td>
-                    <td> {event.intervenant.firstname + " "+event.intervenant.lastname} </td>
-                    <td> {event.hour.getDate()} </td>
+                    <td> {event.batiment?.name} </td>
+                    <td> {event.intervenant?.firstname + " "+event.intervenant?.lastname} </td>
+                    <td> {event.hour?.getDate()} </td>
                 </tr>
             {/each}
             </tbody>

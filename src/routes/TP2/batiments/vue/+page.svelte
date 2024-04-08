@@ -1,6 +1,6 @@
 <script lang="ts">
     import batimentService from "../../../../service/BatimentService";
-    import {onMount} from "svelte";
+    import {onDestroy, onMount} from "svelte";
     import {type Batiment} from "../../../../interface/Batiment";
     import BatimentComponent from "./BatimentComponent.svelte";
     import {goto} from "$app/navigation";
@@ -42,17 +42,14 @@
         }
     }
 
-    function nav(){
-        EventSocket.handleDisconnect();
-        goto("./")
-    }
-
     onMount(async () => {
         batiments = await batimentService.getAll();
-    })
+    });
+
+    onDestroy(EventSocket.handleDisconnect);
 </script>
 <div class="h-screen w-screen flex items-center">
-    <div class="h-16 flex w-fit absolute top-0 justify-start items-center cursor-pointer" on:click={nav}>
+    <div class="h-16 flex w-fit absolute top-0 justify-start items-center cursor-pointer" on:click={() => goto("./")}>
         <div class="h-10 w-10 mx-5">
             <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l6 6m-6-6l6-6"/></svg>
         </div>

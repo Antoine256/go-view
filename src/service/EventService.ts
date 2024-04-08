@@ -8,14 +8,12 @@ class EventService extends GenericService<Event>{
     }
 
     public async seachByBatiment(id:string){
-        let API_URL = "http://localhost:8080/api"
-        const response = await axios.get<Event[]>(API_URL+"/event/searchBat/"+id)
+        const response = await axios.get<Event[]>(this.API_URL+"/event/searchBat/"+id)
         return response.data
     }
 
     public async seachByIntervenant(id:string){
-        let API_URL = "http://localhost:8080/api"
-        const response = await axios.get<Event[]>(API_URL+"/event/searchInt/"+id)
+        const response = await axios.get<Event[]>(this.API_URL+"/event/searchInt/"+id)
         return response.data
     }
 }
