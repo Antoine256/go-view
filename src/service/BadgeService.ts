@@ -9,19 +9,19 @@ class BadgeService extends GenericService<Badge>{
     }
 
     async createBadge(badge: Omit<Badge, 'id'>){
-        const response = await axios.post(`http://localhost:8080/api/badge/create`, badge);
+        const response = await axios.post(`${this.API_URL}/badge/create`, badge);
         return response.data;
     }
 
     async modifBadge(badge: Badge){
-        const response = await axios.put(`http://localhost:8080/api/badge/update`, badge);
+        const response = await axios.put(`${this.API_URL}/badge/update`, badge);
         return response.data;
     }
 
     async getAllBadge(): Promise<BadgeDTO[]> {
-        const response = await axios.get(`http://localhost:8080/api/badge`);
+        const response = await axios.get(`${this.API_URL}/badge`);
         response.data.forEach((e: BadgeDTO)=>{
-            e.ownerName = e.owner.firstname +" "+ e.owner.lastname
+            e.ownerName = e.owner?.firstname +" "+ e.owner?.lastname
         })
         return response.data;
     }
