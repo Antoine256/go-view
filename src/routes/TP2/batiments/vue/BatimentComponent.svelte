@@ -6,7 +6,9 @@
     import BadgeReaderComponent from "./BadgeReaderComponent.svelte";
     import AlarmeComponent from "./AlarmeComponent.svelte";
     import EventSocket from "../../../../service/EventSocket";
-    import {type FormatReponseSocket, MESSAGE} from "../../../../interface/FormatEventSocket";
+    import {FormatEventSocket, type FormatReponseSocket, MESSAGE} from "../../../../interface/FormatEventSocket";
+    import {getBadgeSelected} from "../../../../store/badge";
+    import {getUserSelected} from "../../../../store/user";
 
     export let batiment: Batiment;
     let openDoorIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" viewBox="0 0 24 24"><path fill="currentColor" d="M11 13q.425 0 .713-.288T12 12q0-.425-.288-.712T11 11q-.425 0-.712.288T10 12q0 .425.288.713T11 13m-4 8v-2l6-1V6.875q0-.375-.225-.675t-.575-.35L7 5V3l5.5.9q1.1.2 1.8 1.025T15 6.85v12.8zm-4 0v-2h2V5q0-.85.588-1.425T7 3h10q.85 0 1.425.575T19 5v14h2v2zm4-2h10V5H7z"/></svg>`;
@@ -28,6 +30,14 @@
     function passHuman(id: string, ev: any): void {
         ev.preventDefault();
         ev.target.appendChild(document.getElementById(id));
+        let event: FormatEventSocket = {
+            message: isInside ? "Sort du batiment" : "Entre dans le batiment",
+            idBadge: getBadgeSelected()?.id,
+            idBatiment: batiment.id,
+            idPorte: doorSelected,
+            idIntervenant: getUserSelected()?.id
+        }
+        EventSocket.sendMessage(JSON.stringify(event));
         isInside = !isInside;
         canPass = false;
         doorSelected = -1;
@@ -130,6 +140,6 @@
         {/key}
     </div>
     <div class="h-10 w-10 m-5 absolute top-0 right-0">
-        <AlarmeComponent bind:on="{fireAlarm}"/>
+        <AlarmeComponent idBatiment="{batiment?.id}" bind:on="{fireAlarm}"/>
     </div>
 </div>

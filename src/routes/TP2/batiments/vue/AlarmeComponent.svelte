@@ -1,16 +1,30 @@
 <script lang="ts">
+    import EventSocket from "../../../../service/EventSocket";
+    import {type FormatEventSocket} from "../../../../interface/FormatEventSocket";
+
     export let on: boolean = false;
+    export let idBatiment: number;
 
     let color: string = "text-black";
 
     function alarmOn() {
         if(on){
+            let event: FormatEventSocket = {
+                message: "Alarm on",
+                idBatiment: idBatiment
+            }
+            EventSocket.sendMessage(JSON.stringify(event))
             color = "text-red-500";
             setTimeout(() => {
                 color = "text-orange-500";
                 setTimeout(() => alarmOn(), 1000);
             }, 1000);
         } else {
+            let event: FormatEventSocket = {
+                message: "Alarm off",
+                idBatiment: idBatiment
+            }
+            EventSocket.sendMessage(JSON.stringify(event))
             color ="text-black";
             return;
         }

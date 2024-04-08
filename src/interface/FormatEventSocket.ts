@@ -1,8 +1,9 @@
 export interface FormatEventSocket{
     message: string;
-    idBadge: number;
-    idPorte: number;
+    idBadge?: number;
+    idPorte?: number;
     idBatiment: number;
+    idIntervenant?: number;
 }
 
 export interface FormatReponseSocket{
