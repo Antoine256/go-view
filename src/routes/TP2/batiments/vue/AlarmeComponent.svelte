@@ -5,11 +5,11 @@
     export let on: boolean = false;
     export let idBatiment: number;
 
-    let manualOn: boolean = false;
+    let manualOn: boolean = on;
     let color: string = "text-black";
 
     function alarmOn() {
-        if(on || manualOn){
+        if(manualOn && manualOn !== on){
             if(EventSocket.socket?.readyState === 1){
                 let event: FormatEventSocket = {
                     message: "Alarm on",
@@ -17,12 +17,7 @@
                 }
                 EventSocket.sendMessage(JSON.stringify(event))
             }
-            color = "text-red-500";
-            setTimeout(() => {
-                color = "text-orange-500";
-                setTimeout(() => alarmOn(), 1000);
-            }, 1000);
-        } else {
+        } else if(!manualOn) {
             if(EventSocket.socket?.readyState === 1){
                 let event: FormatEventSocket = {
                     message: "Alarm off",
@@ -30,6 +25,14 @@
                 }
                 EventSocket.sendMessage(JSON.stringify(event))
             }
+        }
+        if(on){
+            color = "text-red-500";
+            setTimeout(() => {
+                color = "text-orange-500";
+                setTimeout(() => alarmOn(), 1000);
+            }, 1000);
+        } else {
             color ="text-black";
             return;
         }
