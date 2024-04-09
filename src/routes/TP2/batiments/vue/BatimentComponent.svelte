@@ -112,7 +112,7 @@
     <div class="w-full h-1/4 flex justify-center items-center bg-gray-300" id="in">
         <HumanComponent hidden="{isInside}" id="humanInBatiment"/>
         {#key batiment}
-            {#if doorIsIn(doorsOpen, doorSelected) && !isInside}
+            {#if (doorIsIn(doorsOpen, doorSelected) || fireAlarmOn.includes(batiment?.id ?? -1)) && !isInside}
                 <div on:drop={() => passHuman("humanOutBatiment", event)} on:dragover={() => allowDrop( event)} class="w-16 h-16 border border-2 border-dashed border-gray-500"></div>
             {/if}
         {/key}
@@ -151,7 +151,7 @@
     <div class="w-full h-1/4 flex justify-center items-center bg-lime-300" id="out">
         <HumanComponent hidden="{!isInside}" id="humanOutBatiment"/>
         {#key batiment}
-            {#if doorIsIn(doorsOpen, doorSelected) && isInside}
+            {#if (doorIsIn(doorsOpen, doorSelected) || fireAlarmOn.includes(batiment?.id ?? -1)) && isInside}
                 <div on:drop={() => passHuman("humanInBatiment", event)} on:dragover={() => allowDrop( event)} class="w-16 h-16 border border-2 border-dashed border-gray-500"></div>
             {/if}
         {/key}
