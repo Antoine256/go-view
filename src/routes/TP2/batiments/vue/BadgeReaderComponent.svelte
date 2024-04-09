@@ -1,6 +1,6 @@
 <script lang="ts">
     import EventSocket from "../../../../service/EventSocket";
-    import {type FormatEventSocket, type FormatReponseSocket, MESSAGE} from "../../../../interface/FormatEventSocket";
+    import {type FormatEventSocket} from "../../../../interface/FormatEventSocket";
     import {acts} from "@tadashi/svelte-notification";
     import {badgeIsSelected, getBadgeSelected} from "../../../../store/badge";
     import {getUserSelected} from "../../../../store/user";

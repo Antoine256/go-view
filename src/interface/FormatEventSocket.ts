@@ -12,7 +12,7 @@ export interface FormatReponseSocket{
     idPorte: number;
 }
 
-export enum MESSAGE{
+enum MESSAGE{
     OPEN_DOOR = "Open door",
     CLOSE_DOOR = "Close Door",
     BLOCK_DOOR = "Block door",
@@ -21,3 +21,5 @@ export enum MESSAGE{
     ALARM_ON = "Alarm on",
     ALARM_OFF = "Alarm off"
 }
+
+export default MESSAGE

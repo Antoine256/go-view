@@ -6,7 +6,8 @@
     import BadgeReaderComponent from "./BadgeReaderComponent.svelte";
     import AlarmeComponent from "./AlarmeComponent.svelte";
     import EventSocket from "../../../../service/EventSocket";
-    import {type FormatEventSocket, type FormatReponseSocket, MESSAGE} from "../../../../interface/FormatEventSocket";
+    import MESSAGE, {type FormatEventSocket, type FormatReponseSocket} from "../../../../interface/FormatEventSocket";
+
     import {getBadgeSelected} from "../../../../store/badge";
     import {getUserSelected} from "../../../../store/user";
 
