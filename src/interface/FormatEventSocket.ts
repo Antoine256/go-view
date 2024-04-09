@@ -1,5 +1,6 @@
 export interface FormatEventSocket{
     message: string;
+    isInside?: boolean;
     idBadge?: number;
     idPorte?: number;
     idBatiment: number;

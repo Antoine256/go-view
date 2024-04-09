@@ -5,6 +5,7 @@
     import {badgeIsSelected, getBadgeSelected} from "../../../../store/badge";
     import {getUserSelected} from "../../../../store/user";
 
+    export let isInside: boolean;
     export let idHuman: string;
     export let idBatiment: number;
     export let idDoor: number;
@@ -26,7 +27,8 @@
                 message: "Badge Lu",
                 idBadge: badge,
                 idBatiment: idBatiment,
-                idPorte: idDoor
+                idPorte: idDoor,
+                isInside: isInside
             }
 
             EventSocket.sendMessage(JSON.stringify(event));

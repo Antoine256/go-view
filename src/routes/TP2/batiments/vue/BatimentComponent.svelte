@@ -76,6 +76,7 @@
                 }
                 if(socket?.message === MESSAGE.CLOSE_DOOR){
                     doorsOpen = removeDoor(doorsOpen, socket.idPorte, socket.idBatiment);
+                    alarmDoor = removeDoor(alarmDoor, socket.idPorte, socket.idBatiment);
                 }
                 if(socket?.message === MESSAGE.BLOCK_DOOR){
                     blockedDoor = addDoor(blockedDoor, socket.idPorte, socket.idBatiment);
@@ -125,7 +126,7 @@
         {#each {length: batiment?.nb_door} as _, i}
             <div class="flex flex-col justify-center items-center text-center">
                 {#if isInside}
-                    <BadgeReaderComponent idHuman="humanInBatiment" idBatiment="{batiment?.id}" idDoor="{i}" bind:doorSeleded={doorSelected}/>
+                    <BadgeReaderComponent isInside="{true}" idHuman="humanInBatiment" idBatiment="{batiment?.id}" idDoor="{i}" bind:doorSeleded={doorSelected}/>
                 {/if}
                 {#key batiment}
                     <LightComponent lightOn="{(doorIsIn(doorsOpen, i) || doorIsIn(blockedDoor, i)) && !doorIsIn(lightOff, i)}" blocked="{doorIsIn(blockedDoor, i)}"/>
@@ -152,7 +153,7 @@
                     <LightComponent lightOn="{(doorIsIn(doorsOpen, i) || doorIsIn(blockedDoor, i)) && !doorIsIn(lightOff, i)}" blocked="{doorIsIn(blockedDoor, i)}"/>
                 {/key}
                 {#if !isInside}
-                    <BadgeReaderComponent idHuman="humanOutBatiment" idBatiment="{batiment?.id}" idDoor="{i}" bind:doorSeleded={doorSelected}/>
+                    <BadgeReaderComponent isInside="{false}" idHuman="humanOutBatiment" idBatiment="{batiment?.id}" idDoor="{i}" bind:doorSeleded={doorSelected}/>
                 {/if}
             </div>
         {/each}

@@ -2,7 +2,8 @@ import {acts} from "@tadashi/svelte-notification";
 
 class EventSocket {
     public socket: WebSocket | null = null;
-    private URL: string = "ws://172.20.10.7:8081";
+    //private URL: string = "ws://172.20.10.7:8081";
+    private URL: string = "ws://localhost:8081";
 
     handleConnect = () => {
         console.log('Connecting to WebSocket server...');
