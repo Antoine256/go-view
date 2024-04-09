@@ -1,50 +1,7 @@
 <script lang="ts">
     import type {Link} from "../../interface/Link";
     import {goto} from '$app/navigation';
-    import {onMount} from "svelte";
-    import {acts, Notifications} from '@tadashi/svelte-notification'
-
-    let socket: WebSocket | null = null;
-
-    const handleConnect = () => {
-        console.log('Connecting to WebSocket server...');
-        socket = new WebSocket('ws://localhost:8081'); // Replace with your WebSocket server URL
-
-        if (!socket) {
-            console.error('Failed to create WebSocket connection');
-            acts.add({mode: 'error', message: 'Connexion loupée !', lifetime: 3})
-            return;
-        }
-
-        socket.onopen = (event) => {
-            console.log('WebSocket connection opened:', event);
-            acts.add({mode: 'success', message: 'Connection Réussie!', lifetime: 3},)
-            if (socket == null) return;
-            socket.send('Hello, server!');
-        };
-
-        socket.onmessage = (event) => {
-            console.log('Received message:', event.data);
-        }
-
-        socket.onclose = (event) => {
-            console.log('WebSocket connection closed:', event);
-            acts.add({mode: 'info', message: 'Connexion Socket Fermée !', lifetime: 3})
-        };
-    };
-
-    const handleDisconnect = () => {
-        if (socket) {
-            socket.close();
-            socket = null;
-            console.log('WebSocket disconnected');
-            acts.add({mode: 'success', message: 'Déconnexion réussie !', lifetime: 3})
-        }
-    };
-
-    onMount(() => {
-        handleConnect();
-    });
+    import {Notifications} from '@tadashi/svelte-notification'
 
     let baseLink = "/tp2"
 
