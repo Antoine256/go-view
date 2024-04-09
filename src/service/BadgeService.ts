@@ -18,8 +18,13 @@ class BadgeService extends GenericService<Badge>{
         return response.data;
     }
 
+    async getBadge(id: number): Promise<BadgeDTO[]> {
+        const response = await axios.get(`${this.API_URL}/badge/get/`+id);
+        return response.data;
+    }
+
     async getAllBadge(): Promise<BadgeDTO[]> {
-        const response = await axios.get(`${this.API_URL}/badge`);
+        const response = await axios.get(`${this.API_URL}/badge/getall`);
         response.data.forEach((e: BadgeDTO)=>{
             e.ownerName = e.owner?.firstname +" "+ e.owner?.lastname
         })
