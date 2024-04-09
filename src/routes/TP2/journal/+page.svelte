@@ -11,17 +11,20 @@
     let events: Event[] = []
 
     async function getEvents(){
-        events = await EventService.getAll();
+        let res = await EventService.getAll();
+        events = res.reverse()
     }
 
     async function searchByBatiment(){
         let id = (document.getElementById("idBat") as HTMLInputElement).value;
-        events = await EventService.seachByBatiment(id);
+        let res = await EventService.seachByBatiment(id);
+        events = res.reverse()
     }
 
     async function searchByIntervenant(){
         let id = (document.getElementById("idInt") as HTMLInputElement).value;
-        events = await EventService.seachByIntervenant(id);
+        let res = await EventService.seachByIntervenant(id);
+        events = res.reverse();
     }
 </script>
 <div class="w-screen h-screen flex">
@@ -56,6 +59,7 @@
                 <th> Batiment </th>
                 <th> Intervenant </th>
                 <th> Date </th>
+                <th> Status </th>
             </tr>
             </thead>
             <tbody>
@@ -64,7 +68,8 @@
                     <td> {event.id} </td>
                     <td> {event.batiment?.name} </td>
                     <td> {event.intervenant?.firstname + " "+event.intervenant?.lastname} </td>
-                    <td> {event.hour?.getDate()} </td>
+                    <td> {event.hour} </td>
+                    <td> {event.goIn ? "Rentré" : "Sorti" } </td>
                 </tr>
             {/each}
             </tbody>
