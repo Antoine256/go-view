@@ -17,5 +17,7 @@ export enum MESSAGE{
     CLOSE_DOOR = "Close Door",
     BLOCK_DOOR = "Block door",
     UNLOCK_DOOR = "Unlock door",
-    LIGHT_OFF = "TurnOffLight"
+    LIGHT_OFF = "TurnOffLight",
+    ALARM_ON = "Alarm on",
+    ALARM_OFF = "Alarm off"
 }

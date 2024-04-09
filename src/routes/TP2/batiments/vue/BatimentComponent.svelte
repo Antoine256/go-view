@@ -6,7 +6,7 @@
     import BadgeReaderComponent from "./BadgeReaderComponent.svelte";
     import AlarmeComponent from "./AlarmeComponent.svelte";
     import EventSocket from "../../../../service/EventSocket";
-    import {FormatEventSocket, type FormatReponseSocket, MESSAGE} from "../../../../interface/FormatEventSocket";
+    import {type FormatEventSocket, type FormatReponseSocket, MESSAGE} from "../../../../interface/FormatEventSocket";
     import {getBadgeSelected} from "../../../../store/badge";
     import {getUserSelected} from "../../../../store/user";
 
@@ -15,13 +15,12 @@
     let closeDoor = `<svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" viewBox="0 0 24 24"><path fill="currentColor" d="M3 21v-2h2V5q0-.825.588-1.412T7 3h10q.825 0 1.413.588T19 5v14h2v2zm14-2V5H7v14zm-3-6q.425 0 .713-.288T15 12q0-.425-.288-.712T14 11q-.425 0-.712.288T13 12q0 .425.288.713T14 13M7 5v14z"/></svg>`;
 
     let isInside = false;
-    let fireAlarm: boolean = false;
     let doorSelected: number = -1;
-    let canPass: boolean = false;
 
     let doorsOpen: {idDoor: number, idBatiment: number}[] = [];
     let blockedDoor: {idDoor: number, idBatiment: number}[] = [];
     let lightOff: {idDoor: number, idBatiment: number}[] = [];
+    let fireAlarmOn: number[] = [];
 
     function allowDrop(ev: any): void {
         ev.preventDefault();
@@ -40,7 +39,6 @@
         }
         EventSocket.sendMessage(JSON.stringify(event));
         isInside = !isInside;
-        canPass = false;
         doorSelected = -1;
     }
 
@@ -86,6 +84,18 @@
                 }
                 if(socket?.message === MESSAGE.LIGHT_OFF){
                     lightOff = addDoor(lightOff, socket.idPorte, socket.idBatiment);
+                }
+                if(socket?.message === MESSAGE.ALARM_ON){
+                    fireAlarmOn = [... fireAlarmOn, socket.idBatiment];
+                    for(let i = 0; i < batiment?.nb_door; i++){
+                        doorsOpen = addDoor(doorsOpen, i, socket.idBatiment);
+                    }
+                }
+                if(socket?.message === MESSAGE.ALARM_OFF){
+                    fireAlarmOn = fireAlarmOn.filter(idBatiment => socket.idBatiment !== idBatiment);
+                    for(let i = 0; i < batiment?.nb_door; i++){
+                        doorsOpen = removeDoor(doorsOpen, i, socket.idBatiment);
+                    }
                 }
             }
         }
@@ -146,6 +156,8 @@
         {/key}
     </div>
     <div class="h-10 w-10 m-5 absolute top-0 right-0">
-        <AlarmeComponent idBatiment="{batiment?.id}" bind:on="{fireAlarm}"/>
+        {#key batiment}
+            <AlarmeComponent idBatiment="{batiment?.id}" on="{fireAlarmOn.includes(batiment?.id ?? -1)}"/>
+        {/key}
     </div>
 </div>
