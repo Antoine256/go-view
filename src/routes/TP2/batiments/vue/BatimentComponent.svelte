@@ -21,6 +21,7 @@
     let doorsOpen: {idDoor: number, idBatiment: number}[] = [];
     let blockedDoor: {idDoor: number, idBatiment: number}[] = [];
     let lightOff: {idDoor: number, idBatiment: number}[] = [];
+    let alarmDoor: {idDoor: number, idBatiment: number}[] = [];
     let fireAlarmOn: number[] = [];
 
     function allowDrop(ev: any): void {
@@ -98,6 +99,9 @@
                         doorsOpen = removeDoor(doorsOpen, i, socket.idBatiment);
                     }
                 }
+                if(socket?.message === MESSAGE.ALARM_DOOR){
+                   alarmDoor = addDoor(alarmDoor, socket.idPorte, socket.idBatiment);
+                }
             }
         }
     }
@@ -127,6 +131,11 @@
                     <LightComponent lightOn="{(doorIsIn(doorsOpen, i) || doorIsIn(blockedDoor, i)) && !doorIsIn(lightOff, i)}" blocked="{doorIsIn(blockedDoor, i)}"/>
                 {/key}
                 <div class="flex justify-center items-center">
+                    {#key batiment}
+                        {#if doorIsIn(alarmDoor, i)}
+                            <svg class="text-red-500" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.192 19q-.212 0-.356-.144t-.144-.357t.144-.356t.356-.143h.966l1.879-6.344q.142-.535.577-.845t.963-.311h2.846q.527 0 .963.31t.577.846L16.843 18h.965q.212 0 .356.144t.144.357t-.144.356t-.356.143zM11.5 7.385v-3q0-.213.144-.357q.144-.143.357-.143t.356.143t.143.357v3q0 .212-.144.356T12 7.885t-.356-.144t-.143-.356m5.096 1.696l2.144-2.125q.14-.14.342-.134q.2.007.35.156q.137.137.137.332t-.14.334l-2.125 2.15q-.146.146-.344.156t-.364-.156t-.165-.357t.165-.356M19 13.885h3q.213 0 .356.144t.144.356t-.144.356t-.356.144h-3q-.213 0-.356-.144t-.144-.357t.144-.356t.356-.143M6.696 9.788L4.571 7.644q-.14-.14-.134-.341t.157-.35q.137-.138.331-.138t.335.14l2.15 2.126q.146.146.155.344t-.155.363t-.357.166t-.357-.166M2 14.885q-.213 0-.356-.144t-.144-.357t.144-.356t.356-.143h3q.213 0 .356.144t.144.356t-.144.356t-.356.144z"/></svg>
+                        {/if}
+                    {/key}
                     <span class="h-24 w-24">
                         {#key doorsOpen && batiment}
                             {#if doorIsIn(doorsOpen, i)}
