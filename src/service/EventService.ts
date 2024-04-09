@@ -4,7 +4,7 @@ import axios from "axios";
 
 class EventService extends GenericService<Event>{
     constructor() {
-        super("intervenant");
+        super("event");
     }
 
     public async seachByBatiment(id:string){
