@@ -10,6 +10,7 @@
 
     import {getBadgeSelected} from "../../../../store/badge";
     import {getUserSelected} from "../../../../store/user";
+    import BatimentService from "../../../../service/BatimentService";
 
     export let batiment: Batiment;
     let openDoorIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" viewBox="0 0 24 24"><path fill="currentColor" d="M11 13q.425 0 .713-.288T12 12q0-.425-.288-.712T11 11q-.425 0-.712.288T10 12q0 .425.288.713T11 13m-4 8v-2l6-1V6.875q0-.375-.225-.675t-.575-.35L7 5V3l5.5.9q1.1.2 1.8 1.025T15 6.85v12.8zm-4 0v-2h2V5q0-.85.588-1.425T7 3h10q.85 0 1.425.575T19 5v14h2v2zm4-2h10V5H7z"/></svg>`;
@@ -67,41 +68,43 @@
 
     function connectOnMessage(){
         if(EventSocket.socket){
-            EventSocket.socket.onmessage = (event) => {
+            EventSocket.socket.onmessage = async (event) => {
                 let socket: FormatReponseSocket = JSON.parse(event.data);
                 console.log(socket)
-                if(socket?.message === MESSAGE.OPEN_DOOR){
+                if (socket?.message === MESSAGE.OPEN_DOOR) {
                     doorsOpen = addDoor(doorsOpen, socket.idPorte, socket.idBatiment);
                     lightOff = removeDoor(lightOff, socket.idPorte, socket.idBatiment);
                 }
-                if(socket?.message === MESSAGE.CLOSE_DOOR){
+                if (socket?.message === MESSAGE.CLOSE_DOOR) {
                     doorsOpen = removeDoor(doorsOpen, socket.idPorte, socket.idBatiment);
                     alarmDoor = removeDoor(alarmDoor, socket.idPorte, socket.idBatiment);
                 }
-                if(socket?.message === MESSAGE.BLOCK_DOOR){
+                if (socket?.message === MESSAGE.BLOCK_DOOR) {
                     blockedDoor = addDoor(blockedDoor, socket.idPorte, socket.idBatiment);
                     lightOff = removeDoor(lightOff, socket.idPorte, socket.idBatiment);
                 }
-                if(socket?.message === MESSAGE.UNLOCK_DOOR){
+                if (socket?.message === MESSAGE.UNLOCK_DOOR) {
                     blockedDoor = removeDoor(blockedDoor, socket.idPorte, socket.idBatiment);
                 }
-                if(socket?.message === MESSAGE.LIGHT_OFF){
+                if (socket?.message === MESSAGE.LIGHT_OFF) {
                     lightOff = addDoor(lightOff, socket.idPorte, socket.idBatiment);
                 }
-                if(socket?.message === MESSAGE.ALARM_ON){
-                    fireAlarmOn = [... fireAlarmOn, socket.idBatiment];
-                    for(let i = 0; i < batiment?.nb_door; i++){
+                if (socket?.message === MESSAGE.ALARM_ON) {
+                    fireAlarmOn = [...fireAlarmOn, socket.idBatiment];
+                    let nbDoor = (await BatimentService.get(socket.idBatiment)).nb_door ?? 0
+                    for (let i = 0; i < nbDoor; i++) {
                         doorsOpen = addDoor(doorsOpen, i, socket.idBatiment);
                     }
                 }
-                if(socket?.message === MESSAGE.ALARM_OFF){
+                if (socket?.message === MESSAGE.ALARM_OFF) {
                     fireAlarmOn = fireAlarmOn.filter(idBatiment => socket.idBatiment !== idBatiment);
-                    for(let i = 0; i < batiment?.nb_door; i++){
+                    let nbDoor = (await BatimentService.get(socket.idBatiment)).nb_door ?? 0
+                    for (let i = 0; i < nbDoor; i++) {
                         doorsOpen = removeDoor(doorsOpen, i, socket.idBatiment);
                     }
                 }
-                if(socket?.message === MESSAGE.ALARM_DOOR){
-                   alarmDoor = addDoor(alarmDoor, socket.idPorte, socket.idBatiment);
+                if (socket?.message === MESSAGE.ALARM_DOOR) {
+                    alarmDoor = addDoor(alarmDoor, socket.idPorte, socket.idBatiment);
                 }
             }
         }
