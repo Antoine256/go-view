@@ -74,7 +74,6 @@
                 state = st.value as BadgeStates
             }
         })
-        //console.log(batLongId)
         let res = await BadgeService.modifBadge({ id: badgeToUpdate!.id,batiments: batLongId, owner_id:badgeToUpdate!.owner.id, state:state})
         getBadges()
     }
@@ -154,7 +153,7 @@
             {#key modtable}
                 {#each cats[activeTab-1].data as catAtt}
                     {#if cats[activeTab-1].name === "Badge"}
-                    <tr class="cursor-pointer" on:click={()=>{badgeToUpdate = catAtt}}>
+                    <tr class="cursor-pointer {catAtt.id === badgeToUpdate?.id ?'bg-green-300' : ''}" on:click={()=>{badgeToUpdate = catAtt}}>
                         {#each cats[activeTab-1].attributes as catAttName}
                             <td> {catAtt[catAttName.attName]} </td>
                         {/each}

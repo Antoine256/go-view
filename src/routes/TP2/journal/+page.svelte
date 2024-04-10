@@ -51,7 +51,7 @@
         </div>
     </div>
     <div class="divider divider-horizontal"></div>
-    <div class="h-2/3 w-1/2">
+    <div class="h-full py-5 w-1/2 overflow-auto ">
         <table class="table">
             <thead>
             <tr>
